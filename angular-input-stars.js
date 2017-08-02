@@ -84,8 +84,8 @@ angular.module('angular-input-stars', [])
             restrict: 'EA',
             replace: true,
             template: '<ul ng-class="listClass">' +
-            '<li ng-touch="paintStars($index)" ng-mouseenter="paintStars($index, true)" ng-mouseleave="unpaintStars($index, false)" ng-repeat="item in items track by $index">' +
-            '<i  ng-class="getClass($index)" ng-click="setValue($index, $event)"></i>' +
+            '<li ng-init="unpaintStars()" ng-touch="paintStars($index)" ng-touch="paintStars($index)" ng-mouseenter="paintStars($index, true)" ng-mouseleave="unpaintStars(false)" ng-repeat="item in items track by $index">' +
+            '<i ng-class="getClass($index)" ng-click="setValue($index, $event)"></i>' +
             '</li>' +
             '</ul>',
             require: 'ngModel',
@@ -149,9 +149,13 @@ angular.module('angular-input-stars', [])
 
 					};
 
-					scope.unpaintStars = function ($index, hover) {
+					scope.unpaintStars = function (hover) {
 
-						scope.paintStars(scope.last_value - 1, hover);
+						if(scope.last_value !== 0){
+						    scope.paintStars(scope.last_value - 1, hover);
+						} else {
+						    scope.paintStars(scope.last_value, hover);
+						}
 
 					};
 
