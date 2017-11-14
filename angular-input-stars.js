@@ -85,7 +85,7 @@ angular.module('angular-input-stars', [])
             replace: true,
             template: '<ul ng-class="listClass">' +
             '<li ng-init="unpaintStars()" ng-touch="paintStars($index)" ng-touch="paintStars($index)" ng-mouseenter="paintStars($index, true)" ng-mouseleave="unpaintStars(false)" ng-repeat="item in items track by $index">' +
-            '<i ng-class="getClass($index)" ng-click="setValue($index, $event)"></i>' +
+            '<i class="{{getClass($index)}}" ng-click="setValue($index, $event)"></i>' +
             '</li>' +
             '</ul>',
             require: 'ngModel',
@@ -143,34 +143,20 @@ angular.module('angular-input-stars', [])
 						scope.last_value = ngModelCtrl.$viewValue || 0;
 					};
 
-					ngModelCtrl.$parsers.unshift(function(value) {
-						var num = parseInt(value);
-						var isNaN = isNaN(num);
-
-						if(isNaN) {
-							ngModel.$setValidity('NaN', true);
-							return undefined;
-						}
-
-						if(num < 0 || num >= scope.items.length){
-							ngModel.$setValidity('OutOfBounds', true);
-							return undefined;
-						}
-			            return value;
-			        });
-
 					scope.getClass = function (index) {
-						return index >= scope.last_value ? obj.iconBase + ' ' + obj.emptyIcon : obj.iconBase + ' ' + obj.fullIcon + ' active ';
+						if(index >= scope.last_value) {
+							return 'hello';obj.iconBase + ' ' + obj.emptyIcon;
+						}
+
+						return obj.iconBase + ' ' + obj.fullIcon + ' active ';
 					};
 
 					scope.unpaintStars = function (hover) {
-
 						if(scope.last_value !== 0){
 						    scope.paintStars(scope.last_value - 1, hover);
 						} else {
 						    scope.paintStars(scope.last_value, hover);
 						}
-
 					};
 
 					scope.paintStars = function ($index, hover) {
@@ -193,12 +179,10 @@ angular.module('angular-input-stars', [])
 								$star.addClass(obj.iconHover);
 
 							} else {
-
 								$star.removeClass(obj.fullIcon);
 								$star.removeClass('active');
 								$star.removeClass(obj.iconHover);
 								$star.addClass(obj.emptyIcon);
-
 							}
 						}
 
