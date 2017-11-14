@@ -125,7 +125,6 @@ angular.module('angular-input-stars', [])
 						scope.readonly = !(attrs.readonly === undefined);
 
 						ngModelCtrl.$setUntouched();
-						console.log(ngModelCtrl);
 					})();
 
 					//Update directive when attributes are changed
