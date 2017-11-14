@@ -123,6 +123,9 @@ angular.module('angular-input-stars', [])
 
 						scope.listClass = attrs.listClass || 'angular-input-stars';
 						scope.readonly = !(attrs.readonly === undefined);
+
+						ngModelCtrl.$setUntouched();
+						console.log(ngModelCtrl);
 					})();
 
 					//Update directive when attributes are changed
@@ -138,15 +141,27 @@ angular.module('angular-input-stars', [])
 
 
 					ngModelCtrl.$render = function () {
-
 						scope.last_value = ngModelCtrl.$viewValue || 0;
-
 					};
 
+					ngModelCtrl.$parsers.unshift(function(value) {
+						var num = parseInt(value);
+						var isNaN = isNaN(num);
+
+						if(isNaN) {
+							ngModel.$setValidity('NaN', true);
+							return undefined;
+						}
+
+						if(num < 0 || num >= scope.items.length){
+							ngModel.$setValidity('OutOfBounds', true);
+							return undefined;
+						}
+			            return value;
+			        });
+
 					scope.getClass = function (index) {
-
 						return index >= scope.last_value ? obj.iconBase + ' ' + obj.emptyIcon : obj.iconBase + ' ' + obj.fullIcon + ' active ';
-
 					};
 
 					scope.unpaintStars = function (hover) {
