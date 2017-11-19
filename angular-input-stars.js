@@ -152,7 +152,6 @@ angular.module('angular-input-stars', [])
 					};
 
 					scope.unpaintStars = function (hover) {
-						debugger;
 						if(scope.last_value !== 0){
 						    scope.paintStars(scope.last_value - 1, hover);
 						} else {
@@ -161,8 +160,6 @@ angular.module('angular-input-stars', [])
 					};
 
 					scope.paintStars = function ($index, hover) {
-						debugger;
-
 						//ignore painting, if readonly
 						if (scope.readonly) {
 							return;
