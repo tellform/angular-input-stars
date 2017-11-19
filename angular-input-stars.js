@@ -145,13 +145,14 @@ angular.module('angular-input-stars', [])
 
 					scope.getClass = function (index) {
 						if(index >= scope.last_value) {
-							return 'hello';obj.iconBase + ' ' + obj.emptyIcon;
+							return obj.iconBase + ' ' + obj.emptyIcon;
 						}
 
 						return obj.iconBase + ' ' + obj.fullIcon + ' active ';
 					};
 
 					scope.unpaintStars = function (hover) {
+						debugger;
 						if(scope.last_value !== 0){
 						    scope.paintStars(scope.last_value - 1, hover);
 						} else {
@@ -160,6 +161,7 @@ angular.module('angular-input-stars', [])
 					};
 
 					scope.paintStars = function ($index, hover) {
+						debugger;
 
 						//ignore painting, if readonly
 						if (scope.readonly) {
